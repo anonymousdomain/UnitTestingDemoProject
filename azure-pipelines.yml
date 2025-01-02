@@ -12,6 +12,7 @@ stages:
     displayName: build the project
     steps:
     - script: |
-          cd project
-          mvn clean install -DskipTests
-      displayName: 'Build Without Running Tests'
+        echo "$(pwd) before redirect"
+        cd project
+        echo "$(pwd) after "
+        mvn clean install -DskipTests
