@@ -19,6 +19,7 @@ stages:
       displayName: 'Build the Project without Running Tests'
 - stage: test
   displayName: Test Stage
+  condition: succeeded()
   jobs:
   - job: TestUnitTest
     displayName: Unit Test
@@ -26,4 +27,3 @@ stages:
       - powershell: |
           cd project 
           mvn test 
-          
