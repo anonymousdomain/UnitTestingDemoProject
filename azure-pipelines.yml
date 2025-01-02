@@ -11,18 +11,7 @@ stages:
   - job: BuildJob
     displayName: build the project
     steps:
-    - task: Maven@4
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: 'install'
-        publishJUnitResults: false
-        javaHomeOption: 'JDKVersion'
-        mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-        effectivePomSkip: false
-        sonarQubeRunAnalysis: false
     - script: |
-            cd project 
-            mvn clean install -DskipTests
-      displayName: 'Build without runing the test'
-
+          cd project
+          mvn clean install -DskipTests
+      displayName: 'Build Without Running Tests'
