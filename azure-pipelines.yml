@@ -17,3 +17,13 @@ stages:
         Write-Output "Current directory after redirect: $(Get-Location)"  # PowerShell command to print the directory
         mvn clean install -DskipTests  # Run Maven build with tests skipped
       displayName: 'Build the Project without Running Tests'
+- stage: test
+  displayName: Test Stage
+  jobs:
+  - job: TestUnitTest
+    displayName: Unit Test
+    steps:
+      - powershell: |
+          cd project 
+          mvn test 
+          
