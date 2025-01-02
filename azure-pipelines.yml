@@ -1,0 +1,26 @@
+trigger:
+- master
+
+pool:
+  name: 'Dengene-Agent'
+
+stages:
+- stage: build
+  displayName: Build Stage
+  jobs:
+  - job: BuildJob
+    displayName: build the project
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.11'
+        jdkArchitectureOption: 'x64'
+    - script: |
+            cd project 
+            mvn clean install -DskipTests
+      displayName: 'Build without runing the test'
+        # testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        # goals: 'package'
