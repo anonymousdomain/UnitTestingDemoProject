@@ -11,8 +11,9 @@ stages:
   - job: BuildJob
     displayName: build the project
     steps:
-    - script: |
-        echo "$(pwd) before redirect"
-        cd project
-        echo "$(pwd) after "
-        # mvn clean install -DskipTests
+    - powershell: |
+        Write-Output "Current directory before redirect: $(Get-Location)"  # PowerShell command to print the directory
+        cd project  # Navigate to the 'project' directory
+        Write-Output "Current directory after redirect: $(Get-Location)"  # PowerShell command to print the directory
+        mvn clean install -DskipTests  # Run Maven build with tests skipped
+      displayName: 'Build the Project without Running Tests'
