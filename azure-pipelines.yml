@@ -15,4 +15,4 @@ stages:
         echo "$(pwd) before redirect"
         cd project
         echo "$(pwd) after "
-        mvn clean install -DskipTests
+        # mvn clean install -DskipTests
