@@ -16,16 +16,17 @@ stages:
           mvn test 
   - job: CodeCoverage
     displayName: Code Covarage Test
-    condition: succeeded
+    condition: succeeded()
     steps:
       - powershell: |
           cd project 
           mvn test jacoco:report
 - stage: build
-  displayName: Build Stage
   condition: succeeded()
+  displayName: Build Stage
   jobs:
   - job: BuildJob
+
     displayName: build the project
     steps:
     - powershell: |
