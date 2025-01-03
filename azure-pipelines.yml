@@ -34,7 +34,7 @@ stages:
         mvn clean install -DskipTests  # Run Maven build with tests skipped
       displayName: 'Build the Project without Running Tests'
     - powershell: |
-        Copy-Item -Path .\target\* -Destination "$(Pipeline.Workspace)\BuildOutput" -Recurse
+        Copy-Item -Path .\unit_test_demo\target\* -Destination "$(Pipeline.Workspace)\BuildOutput" -Recurse
       displayName: 'Save build Artifact'
     - powershell: |
         $artifactPath= $(Pipeline.Workspace)\BuildOutput
