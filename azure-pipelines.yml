@@ -5,21 +5,8 @@ pool:
   name: 'Dengene-Agent'
 
 stages:
-- stage: build
-  displayName: Build Stage
-  jobs:
-  - job: BuildJob
-    displayName: build the project
-    steps:
-    - powershell: |
-        Write-Output "Current directory before redirect: $(Get-Location)"  # PowerShell command to print the directory
-        cd project  # Navigate to the 'project' directory
-        Write-Output "Current directory after redirect: $(Get-Location)"  # PowerShell command to print the directory
-        mvn clean install -DskipTests  # Run Maven build with tests skipped
-      displayName: 'Build the Project without Running Tests'
 - stage: test
   displayName: Test Stage
-  condition: succeeded()
   jobs:
   - job: TestUnitTest
     displayName: Unit Test
@@ -27,3 +14,32 @@ stages:
       - powershell: |
           cd project 
           mvn test 
+  - job: CodeCoverage
+    displayName: Code Covarage Test
+    condition: succeeded
+    steps:
+      - powershell: |
+          cd project 
+          mvn test jacoco:report
+- stage: build
+  displayName: Build Stage
+  condition: succeeded()
+  jobs:
+  - job: BuildJob
+    displayName: build the project
+    steps:
+    - powershell: |
+        cd project  # Navigate to the 'project' directory
+        mvn clean install -DskipTests  # Run Maven build with tests skipped
+      displayName: 'Build the Project without Running Tests'
+    - powershell: |
+        mkdir $(Pipeline.Workspace)\BuildOutput 
+        Copy-Item -Path .\target\* -Destination "$(Pipeline.Workspace)\BuildOutput" -Recurse
+      displayName: 'Save build Artifact'
+    - powershell: |
+        $artifactPath= $(Pipeline.Workspace)\BuildOutput
+        $artifactName = "BuildArtifact"
+        Write-Output "Artifact Path: $artifactPath"
+        Write-Output "Artifact Name: $artifactName"
+        Copy-Item -Path $artifactPath -Destination "$(Build.ArtifactStagingDirectory)" -Recurse
+      displayName: 'Publish Artifact'
