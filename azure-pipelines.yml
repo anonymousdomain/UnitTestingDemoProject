@@ -38,6 +38,7 @@ stages:
         Copy-Item -Path .\unit_test_demo\target\*.jar -Destination "$(Pipeline.Workspace)\BuildOutput" -Recurse
       displayName: 'Save build Artifact'
     - powershell: |
+        cd project
         $artifactPath= $(Pipeline.Workspace)\BuildOutput\*.jar
         $artifactName = "BuildArtifact"
         Write-Output "Artifact Path: $artifactPath"
