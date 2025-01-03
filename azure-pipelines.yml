@@ -39,7 +39,7 @@ stages:
       displayName: 'Save build Artifact'
     - powershell: |
         cd project
-        $artifactPath= $(Pipeline.Workspace)\BuildOutput\*.jar
+        $artifactPath= "$(Pipeline.Workspace)\BuildOutput"
         $artifactName = "BuildArtifact"
         Write-Output "Artifact Path: $artifactPath"
         Write-Output "Artifact Name: $artifactName"
