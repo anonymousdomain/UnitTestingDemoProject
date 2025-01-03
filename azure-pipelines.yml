@@ -35,10 +35,10 @@ stages:
       displayName: 'Build the Project without Running Tests'
     - powershell: |
         cd project 
-        Copy-Item -Path .\unit_test_demo\target\* -Destination "$(Pipeline.Workspace)\BuildOutput" -Recurse
+        Copy-Item -Path .\unit_test_demo\target\*.jar -Destination "$(Pipeline.Workspace)\BuildOutput" -Recurse
       displayName: 'Save build Artifact'
     - powershell: |
-        $artifactPath= $(Pipeline.Workspace)\BuildOutput
+        $artifactPath= $(Pipeline.Workspace)\BuildOutput\*.jar
         $artifactName = "BuildArtifact"
         Write-Output "Artifact Path: $artifactPath"
         Write-Output "Artifact Name: $artifactName"
